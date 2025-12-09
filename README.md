@@ -1,37 +1,181 @@
-📘 Analisis Data Toyota Corolla
+# 🚗 Analisis Data Toyota Corolla – KNIME Machine Learning Workflow
 
-Dokumen ini berisi rangkuman proses analisis dan pemodelan pada dataset Toyota Corolla dengan sekitar 1.436 entri yang mencakup fitur teknis kendaraan, karakteristik model, serta variabel yang memengaruhi harga. Workflow dibangun menggunakan KNIME dengan kombinasi analisis statistik, pembersihan data, dan machine learning.
+Repository ini berisi workflow KNIME untuk melakukan analisis dan prediksi harga mobil Toyota Corolla. Workflow mencakup proses data preprocessing, feature engineering, model training, dan model evaluation menggunakan algoritma Decision Tree dan Random Forest.
 
-🔧 1. Persiapan dan Pengolahan Data
-a. Penanganan Data Hilang
+Tujuan utama proyek ini adalah memahami faktor-faktor yang memengaruhi harga mobil serta membangun model prediksi yang akurat dan mudah direplikasi.
 
-Sebelum model dilatih, dataset diperiksa untuk mendeteksi nilai kosong.
+# 📊 Dataset
 
-Nilai numerik yang hilang disubstitusi dengan nilai rata-rata kolom terkait.
+Dataset berisi 1.436 baris data mobil Toyota Corolla yang dijual pada pasar Eropa.
+Tiap baris merepresentasikan satu unit kendaraan dengan informasi teknis maupun kondisi mobil.
 
-Pendekatan ini menjaga keseragaman distribusi data sekaligus memastikan tidak ada baris penting yang dibuang.
+Kolom penting mencakup:
 
-b. Seleksi Kolom
+Price — harga jual mobil (target prediksi)
 
-Beberapa kolom yang tidak relevan atau tidak mendukung prediksi dihapus.
+Age — usia mobil dalam bulan
 
-Proses ini menyisakan fitur inti seperti spesifikasi mesin, tahun kendaraan, tenaga, tipe bahan bakar, dan harga.
+KM — jarak tempuh (kilometer)
 
-c. Pengolahan Fitur Kategorikal
+HP — tenaga mesin
 
-Kolom kategori (fuel type, transmission, variant, dan lainnya) diubah menjadi format numerik menggunakan One-to-Many Encoding.
+Fuel Type — kategori bahan bakar
 
-Setiap kategori dibuatkan kolom biner baru.
+MetColor — metallic color (0/1)
 
-Tujuannya agar seluruh fitur dapat digunakan sebagai input untuk model seperti Decision Tree dan Random Forest.
+Automatic — status transmisi
 
-d. Pembuatan Fitur Tambahan
+Gears, Doors, Weight
 
-Dengan node Math Formula, beberapa atribut dihitung ulang atau dibuat ulang (jika diperlukan oleh analisis).
+Dan fitur teknis lainnya
 
-Hal ini dilakukan untuk memperkaya data dan meningkatkan performa prediksi.
+Dataset memiliki kombinasi numerik dan kategorikal, sehingga perlu dilakukan beberapa tahap processing sebelum model dijalankan.
 
-🤖 2. Proses Pembelajaran Model
-a. Pembagian Dataset
+# 🔧 Data Preparation
 
-Data dibagi menjadi dua subset menggunakan pemisahan acak:
+Tahap ini bertujuan memastikan data bersih, konsisten, dan siap digunakan untuk model ML.
+
+1. Missing Value Handling
+
+Missing value pada kolom numerik diisi menggunakan mean.
+
+Teknik ini digunakan agar dataset tetap lengkap tanpa menghapus baris.
+
+Menghindari bias terhadap model yang peka terhadap missing entries.
+
+2. Column Filtering
+
+Membersihkan kolom yang tidak relevan, redundant, atau tidak diperlukan model.
+
+Mengurangi kompleksitas dan memperbaiki performa model.
+
+3. Encoding Fitur Kategorikal
+
+Fitur seperti Fuel Type, Doors, dan beberapa atribut kategorikal lain di-encode menggunakan One-Hot Encoding.
+
+Encoding diperlukan agar model ML memahami kategori sebagai representasi numerik.
+
+4. Normalisasi / Transformasi Fitur (opsional)
+
+Beberapa fitur dapat dinormalisasi jika memengaruhi kinerja algoritma tertentu.
+
+Normalisasi tidak dilakukan pada target karena harga tetap harus dalam satuan asli.
+
+5. Data Splitting
+
+Pembagian dataset menggunakan node Partitioning:
+
+Training set: 80%
+
+Testing set: 20%
+
+Random sampling dengan fixed seed untuk hasil yang konsisten setiap run.
+
+Pembagian ini memastikan model memiliki cukup data untuk belajar, namun tetap menyisakan data independen untuk evaluasi.
+
+# 🤖 Modeling
+
+Workflow menggunakan dua algoritma utama:
+
+1. Decision Tree Regression
+
+Model dasar yang mudah dipahami dan divisualisasikan.
+
+Memberikan gambaran hierarki faktor yang memengaruhi harga.
+
+Menghasilkan pohon keputusan yang dapat diekspor atau divisualisasikan di KNIME.
+
+2. Random Forest Regression
+
+Model ensemble yang menggabungkan banyak Decision Tree.
+
+Lebih stabil, lebih akurat, dan lebih tahan terhadap noise.
+
+Sering menjadi baseline regression model yang kuat.
+
+Random Forest biasanya mengungguli Decision Tree pada dataset dengan banyak variabel seperti ini.
+
+# 📈 Evaluasi Model
+
+Beberapa metrik evaluasi yang digunakan:
+
+MAE (Mean Absolute Error)
+Mengukur rata-rata kesalahan absolut antara prediksi dan nilai sebenarnya.
+
+RMSE (Root Mean Squared Error)
+Lebih sensitif terhadap outlier; semakin kecil semakin baik.
+
+R² Score
+Menunjukkan seberapa besar variasi harga dapat dijelaskan oleh model.
+
+Perbandingan umum yang ditemukan:
+
+Decision Tree → lebih mudah diinterpretasi tapi cenderung overfit
+
+Random Forest → memberikan error lebih rendah dan prediksi lebih stabil
+
+# 📝 Insight Utama
+
+Hasil analisis menunjukkan:
+
+Age adalah faktor paling signifikan: mobil yang lebih tua memiliki harga lebih rendah.
+
+KM (kilometer) juga sangat berpengaruh—semakin tinggi KM, semakin turun harga.
+
+HP (tenaga mesin) dan variabel teknis lain turut memengaruhi harga, namun efeknya tidak sebesar Age dan KM.
+
+Mobil dengan warna metallic, mesin lebih bertenaga, dan kondisi lebih baik cenderung memiliki harga lebih tinggi.
+
+Model Random Forest berhasil mempelajari pola ini dengan cukup baik dibandingkan Decision Tree.
+
+# 📊 Visualisasi & Analisis Tambahan
+
+Beberapa visualisasi yang dapat dilihat dalam workflow:
+
+Distribusi KM, Age, dan Price
+
+Scatter plot hubungan fitur vs Price
+
+Korelasi antar fitur
+
+Feature importance dari Random Forest
+
+Error plot atau residual analysis
+
+Visualisasi ini membantu memahami karakteristik data dan perilaku model.
+
+# ▶️ Cara Menjalankan Workflow
+
+Install dan buka KNIME Analytics Platform
+
+Import file workflow .knwf
+
+Pastikan path dataset sesuai pada node CSV Reader
+
+Jalankan workflow dari awal (click Execute all upstream nodes)
+
+Lihat hasil prediksi, grafik, dan evaluasi pada node output seperti:
+
+Random Forest Predictor
+
+Scorer / Numeric Scorer
+
+Table View / Histogram
+
+# 🗂 Struktur Repository
+📁 data/         → Dataset mentah atau hasil preprocessing  
+📁 workflow/     → File workflow KNIME (.knwf)  
+📁 output/       → Grafik, evaluasi, dan file hasil model (opsional)  
+README.md        → Dokumentasi ini  
+
+# 📝 Kesimpulan
+
+Analisis data Toyota Corolla menggunakan workflow KNIME memberikan gambaran komprehensif mengenai faktor-faktor yang mempengaruhi harga mobil serta efektivitas model prediksi yang digunakan. Dengan memanfaatkan empat fitur utama seperti Price (target), Age, KM, dan HP, model dapat mempelajari pola harga dengan cukup baik meskipun jumlah fitur yang digunakan relatif sedikit.
+
+Dari hasil preprocessing dan eksplorasi, terlihat bahwa Age (usia mobil) dan KM (jarak tempuh) merupakan variabel yang paling menentukan dalam penurunan harga. Mobil yang lebih tua dan memiliki kilometer tinggi menunjukkan penurunan nilai yang signifikan, menggambarkan pola depresiasi alami kendaraan. HP (tenaga mesin) memiliki pengaruh tambahan terhadap harga, di mana mobil dengan tenaga lebih besar cenderung lebih bernilai, meskipun kontribusinya tidak sebesar Age dan KM.
+
+Dalam pemodelan, Decision Tree memberikan interpretasi awal yang mudah dipahami namun rentan overfitting. Sementara Random Forest terbukti lebih unggul dengan error yang lebih rendah dan stabilitas prediksi yang lebih baik. Model ini mampu menangkap hubungan non-linear antar fitur dan mengurangi fluktuasi yang muncul pada model pohon tunggal.
+
+Proses workflow KNIME secara keseluruhan bekerja sangat baik dalam menangani seluruh tahapan: mulai dari cleaning, transforming, partitioning, hingga evaluasi. Penggunaan node seperti Missing Value, Column Filter, One-Hot Encoder, dan Partitioning (80/20) memastikan data yang digunakan bersih, representatif, dan sesuai untuk pemodelan.
+
+Secara keseluruhan, kombinasi fitur Age, KM, dan HP sudah cukup memberikan gambaran kuat mengenai nilai pasar Toyota Corolla. Penggunaan Random Forest sebagai model utama memberikan hasil prediksi yang akurat serta mudah direplikasi dalam workflow. Hasil ini menunjukkan bahwa model regresi berbasis ensemble efektif digunakan untuk masalah prediksi harga kendaraan dengan dataset sederhana maupun terbatas.
