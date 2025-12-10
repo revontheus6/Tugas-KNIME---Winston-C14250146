@@ -116,6 +116,30 @@ Random Forest → memberikan error lebih rendah dan prediksi lebih stabil
 
 # 📝 Insight Utama
 
+
+<img width="1580" height="980" alt="image" src="https://github.com/user-attachments/assets/891347db-d49b-44d2-8704-c5e52fe13d7f" />
+
+🔍 Insight dari Grafik Tren Harga Mobil 1998–2004
+
+Harga mobil menunjukkan tren kenaikan yang stabil setiap tahun.
+Dari 1998 hingga 2004, grafik memperlihatkan peningkatan rata-rata harga kendaraan tanpa adanya penurunan, mencerminkan pola pertumbuhan konsisten.
+
+Lonjakan harga terbesar terjadi antara 1999–2000 dan 2001–2002.
+Dua periode ini mengalami peningkatan tajam, yang mengindikasikan adanya faktor eksternal seperti inovasi teknologi besar, perubahan pasar, atau kenaikan signifikan biaya produksi.
+
+Kenaikan harga setelah 2002 tetap terjadi tetapi lebih landai.
+Ini menunjukkan bahwa pasar mulai mencapai stabilitas setelah fase pertumbuhan cepat.
+
+<img width="1580" height="980" alt="image" src="https://github.com/user-attachments/assets/041fe207-a82c-4065-82b5-8ab6c3070c54" />
+
+
+<img width="1580" height="980" alt="image" src="https://github.com/user-attachments/assets/2b02c4cf-f422-4d9c-aa15-7d6ab4967a18" />
+
+Grafik bar chart menunjukkan perubahan rata-rata harga mobil dari tahun 1998 hingga 2004. Terlihat bahwa setiap batang semakin tinggi seiring bertambahnya tahun, yang berarti harga mobil mengalami peningkatan konsisten dari tahun ke tahun. Kenaikan paling signifikan tampak pada periode 1999–2000 dan 2001–2002, di mana harga melonjak cukup tajam dibanding tahun-tahun sebelumnya. Pola ini menggambarkan adanya faktor-faktor seperti inflasi, peningkatan fitur kendaraan, teknologi mesin yang semakin maju, dan perubahan tren pasar yang menyebabkan harga mobil terus naik. Secara keseluruhan, bar chart menegaskan bahwa tahun produksi memiliki hubungan langsung dengan tinggi-rendahnya harga, di mana mobil keluaran tahun lebih baru selalu berada pada kategori harga yang lebih tinggi.
+
+Tren keseluruhan menunjukkan bahwa tahun produksi memiliki pengaruh kuat terhadap harga.
+Semakin baru tahun produksi, semakin tinggi kisaran harga rata-ratanya.
+
 Hasil analisis menunjukkan:
 
 Age adalah faktor paling signifikan: mobil yang lebih tua memiliki harga lebih rendah.
